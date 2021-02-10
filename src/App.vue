@@ -3,20 +3,25 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </div>
-  <Menu />
-  <router-view/>
+  <Menu :menu-links="links" />
+  <router-view />
 </template>
 
 <script lang="ts">
-import Menu from '@/components/Menu.vue';
-import { Options, Vue } from 'vue-class-component';
+import Menu from "@/components/Menu.vue";
+import { Options, Vue } from "vue-class-component";
 
 @Options({
   components: {
-    Menu
-  }
+    Menu,
+  },
 })
-export default class App extends Vue{}
+export default class App extends Vue {
+  links = [
+    { url: "/", name: "Home" },
+    { url: "/about", name: "About" },
+  ];
+}
 </script>
 
 <style lang="scss">
