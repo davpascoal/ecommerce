@@ -1,25 +1,45 @@
 <template>
-  <div class="flex justify-between p-4">
-    <button @click="() => toggleMenu(true)">
-      <fa icon="bars" size="2x" />
-    </button>
-
-    <button>
-      <fa icon="shopping-cart" size="2x" />
-    </button>
-  </div>
-  <div class="menu" :class="[visible ? activeClass : '']">
-    <nav class="p-4 bg-primary">
-      <button @click="() => toggleMenu(false)">
-        <fa icon="times" size="2x" />
+  <nav class="grid grid-cols-3 p-4">
+    <!-- Toggle -->
+    <div class="flex justify-start">
+      <button @click="() => toggleMenu(true)" class="lg:hidden">
+        <fa icon="bars" size="2x" />
       </button>
-      <ul>
-        <li v-for="link in menuLinks" :key="link.url">
-          <router-link :to="link.url">{{ link.name }}</router-link>
+    </div>
+
+    <!-- Desktop Menu -->
+    <!-- TODO: How to extract this into a method?? -->
+    <div class="flex justify-center">
+      <ul class="hidden lg:flex">
+        <li v-for="link in menuLinks" :key="link.path" class="p-3">
+          <router-link :to="link.path">{{ link.name }}</router-link>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Shopping Cart -->
+    <div class="flex justify-end">
+      <button>
+        <fa icon="shopping-cart" size="2x" />
+      </button>
+    </div>
+  </nav>
+  <div class="lg:hidden">
+    <nav
+      class="bg-primary h-full menu__drawer w-1/4 text-center"
+      :class="[visible ? activeClass : '']"
+    >
+      <ul @click="() => toggleMenu(false)">
+        <li v-for="link in menuLinks" :key="link.path" class="p-3">
+          <router-link :to="link.path">{{ link.name }}</router-link>
         </li>
       </ul>
     </nav>
-    <div class="overlay" @click="() => toggleMenu(false)"></div>
+    <div
+      v-show="visible"
+      class="overlay"
+      @click="() => toggleMenu(false)"
+    ></div>
   </div>
 </template>
 
@@ -33,7 +53,7 @@ import { Options, Vue } from "vue-class-component";
 })
 export default class Menu extends Vue {
   visible = false;
-  activeClass = "menu--visible";
+  activeClass = "menu__drawer--visible";
   menuLinks!: Array<any>;
 
   toggleMenu(visibility: boolean) {
@@ -43,15 +63,12 @@ export default class Menu extends Vue {
 </script>
 
 <style scoped lang="scss">
-.menu {
-  display: grid;
-  grid-template-columns: auto 1fr;
+.menu__drawer {
   position: fixed;
   top: 0;
-  width: 100vw;
   height: 100vh;
-  transform: translate3d(-100vw, 0, 0);
-  transition: transform 0.3s ease-in-out;
+  transform: translate3d(-100%, 0, 0);
+  transition: transform 0.2s ease-in-out;
   z-index: 10;
 
   &--visible {
@@ -59,7 +76,16 @@ export default class Menu extends Vue {
   }
 }
 
+.router-link-exact-active {
+  color: #42b983;
+}
+
 .overlay {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
+  z-index: 5;
 }
 </style>
