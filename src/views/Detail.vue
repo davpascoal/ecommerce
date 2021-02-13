@@ -1,14 +1,13 @@
 <template>
-  <router-link
-    :to="{ name: 'Detail', params: { id: product.id } }"
-    class="shadow-lg p-4 break-words flex flex-col"
-  >
+  <section v-if="product">
     <div class="flex-grow flex items-center">
       <img :src="product.image" />
     </div>
     <h1 class="font-bold text-xl mt-4">{{ product.title }}</h1>
     <p class="mt-4">{{ product.price }}$</p>
-  </router-link>
+  </section>
+  <div v-else-if="isFetching">Loading...</div>
+  <div v-else>Product not available</div>
 </template>
 
 <script lang="ts">
@@ -22,7 +21,7 @@ import { Options, Vue } from "vue-class-component";
     },
   },
 })
-export default class ProductCard extends Vue {}
+export default class Detail extends Vue {
+  isFetching = false;
+}
 </script>
-
-<style scoped></style>

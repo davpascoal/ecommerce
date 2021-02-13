@@ -16,6 +16,15 @@ export const routes: Array<RouteRecordRaw> = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
+  {
+    path: "/detail/:id",
+    name: "Detail",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Detail.vue"),
+    meta: {
+      hidden: true,
+    },
+  },
 ];
 
 const router = createRouter({

@@ -44,7 +44,4 @@ export default createStore<IStore>({
     },
   },
   modules: {},
-  // getters: {
-  //   getProducts: (state) => state.products.data,
-  // },
 });

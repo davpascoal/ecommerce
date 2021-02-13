@@ -15,6 +15,6 @@ import { routes } from "@/router/index";
   },
 })
 export default class App extends Vue {
-  menuLinks = routes;
+  menuLinks = routes.filter((e) => e.meta?.hidden !== true);
 }
 </script>
