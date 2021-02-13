@@ -14,8 +14,8 @@ import { Options, Vue } from "vue-class-component";
 import Products from "@/components/Products.vue"; // @ is an alias to /src
 import { mapState } from "vuex";
 import { ProductsActionTypes } from "@/store";
-import { IProduct } from "@/services/product/product.api";
 import { IRequest } from "@/store/state.api";
+import { IProduct } from "@/services/product/product.api";
 
 @Options({
   components: {
@@ -31,11 +31,13 @@ import { IRequest } from "@/store/state.api";
   },
 })
 export default class Home extends Vue {
-  products!: IRequest<Array<IProduct>>;
   getProducts!: Function;
+  products!: IRequest<Array<IProduct>>;
 
   created() {
-    this.getProducts();
+    if (!this.products.data.length) {
+      this.getProducts();
+    }
   }
 }
 </script>

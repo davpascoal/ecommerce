@@ -24,6 +24,8 @@
       </button>
     </div>
   </nav>
+
+  <!-- Drawer -->
   <div class="lg:hidden">
     <nav
       class="bg-primary h-full menu__drawer w-1/4 text-center"
