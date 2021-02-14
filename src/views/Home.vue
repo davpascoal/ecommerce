@@ -2,9 +2,10 @@
   <div class="home">
     <div v-if="products.isFetching">Loading...</div>
 
+    <!-- TODO: Improve the array from -->
     <Products
-      v-else-if="products.data.length > 0"
-      :product-list="products.data"
+      v-else-if="products.data.size > 0"
+      :product-list="Array.from(products.data.values())"
     />
   </div>
 </template>
@@ -32,10 +33,10 @@ import { IProduct } from "@/services/product/product.api";
 })
 export default class Home extends Vue {
   getProducts!: Function;
-  products!: IRequest<Array<IProduct>>;
+  products!: IRequest<Map<number, IProduct>>;
 
   created() {
-    if (!this.products.data.length) {
+    if (!this.products.data.size) {
       this.getProducts();
     }
   }

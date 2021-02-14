@@ -1,3 +1,4 @@
+import { IProduct } from "./../services/product/product.api";
 import { IStore } from "@/store/state.api";
 import { createStore } from "vuex";
 import api from "@/services";
@@ -12,7 +13,7 @@ export enum ProductsActionTypes {
 export default createStore<IStore>({
   state: {
     products: {
-      data: [],
+      data: {} as any,
       isFetching: false,
     },
   },
@@ -20,8 +21,11 @@ export default createStore<IStore>({
     getProductsRequest(state) {
       state.products.isFetching = true;
     },
-    getProductsSuccess(state, payload) {
-      state.products.data = payload;
+    getProductsSuccess(state, payload: Array<IProduct>) {
+      const indexedData: Map<number, IProduct> = new Map(
+        payload.map((e) => [e.id, e])
+      );
+      state.products.data = indexedData;
       state.products.isFetching = false;
     },
     getProductsError(state, payload) {
