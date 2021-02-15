@@ -1,7 +1,7 @@
-import { IProduct } from "@/services/product/product.api";
+import { IProducts } from "@/services/product/product.api";
 
 export interface IStore {
-  products: IRequest<Map<number, IProduct>>;
+  products: IProducts;
 }
 
 export interface IRequest<T, TT = boolean> {

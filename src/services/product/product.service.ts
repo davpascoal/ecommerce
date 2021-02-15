@@ -7,3 +7,10 @@ export const getProducts = async (): Promise<Array<IProduct>> => {
 
   return products;
 };
+
+export const getProduct = async (id: string | number): Promise<IProduct> => {
+  const response = await fetch(baseApi(`products/${id}`));
+  const products = await response.json();
+
+  return products;
+};

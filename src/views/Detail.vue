@@ -11,17 +11,41 @@
 </template>
 
 <script lang="ts">
-import { IProduct } from "@/services/product/product.api";
+import { IProduct, IProducts } from "@/services/product/product.api";
 import { Options, Vue } from "vue-class-component";
+import { mapState } from "vuex";
+import api from "@/services";
 
 @Options({
-  props: {
-    product: {
-      type: Object as () => IProduct,
-    },
+  computed: {
+    ...mapState(["products"]),
   },
 })
 export default class Detail extends Vue {
+  products!: IProducts;
   isFetching = false;
+  product: undefined | IProduct;
+
+  created() {
+    const id = this.$route.params.id as string;
+    this.product = this.products.data.size
+      ? this.products.data.get(id)
+      : undefined;
+
+    // Get product
+    if (!this.product) {
+      this.isFetching = true;
+      api.products
+        .getProduct(id)
+        .then((product) => {
+          this.product = product;
+          this.isFetching = false;
+        })
+        .catch((error) => {
+          this.isFetching = false;
+          console.log("Error fetching product", error);
+        });
+    }
+  }
 }
 </script>

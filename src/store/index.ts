@@ -1,4 +1,4 @@
-import { IProduct } from "./../services/product/product.api";
+import { IProduct, IProducts } from "./../services/product/product.api";
 import { IStore } from "@/store/state.api";
 import { createStore } from "vuex";
 import api from "@/services";
@@ -22,8 +22,8 @@ export default createStore<IStore>({
       state.products.isFetching = true;
     },
     getProductsSuccess(state, payload: Array<IProduct>) {
-      const indexedData: Map<number, IProduct> = new Map(
-        payload.map((e) => [e.id, e])
+      const indexedData: Map<string, IProduct> = new Map(
+        payload.map((e) => [e.id.toString(), e])
       );
       state.products.data = indexedData;
       state.products.isFetching = false;
