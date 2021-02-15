@@ -1,13 +1,33 @@
 <template>
-  <section v-if="product">
-    <div class="flex-grow flex items-center">
-      <img :src="product.image" />
+  <section v-if="product" class="p-4 pb-20">
+    <div class="lg:grid lg:grid-cols-2">
+      <div class="flex-grow flex items-center px-24">
+        <img :src="product.image" />
+      </div>
+
+      <!-- Info -->
+      <div>
+        <h1 class="font-bold text-xl mt-4">{{ product.title }}</h1>
+        <p class="mt-4 text-lg font-bold">{{ product.price }}$</p>
+        <button class="mt-4 border-2 border-purple-500 p-2 hidden lg:block">
+          Add to Cart
+        </button>
+      </div>
     </div>
-    <h1 class="font-bold text-xl mt-4">{{ product.title }}</h1>
-    <p class="mt-4">{{ product.price }}$</p>
+    <p class="mt-4">{{ product.description }}</p>
   </section>
   <div v-else-if="isFetching">Loading...</div>
   <div v-else>Product not available</div>
+
+  <!-- Quick actions footer for mobile -->
+  <footer
+    class="h-20 fixed bottom-0 bg-detail-footer w-full border-t-2 border-gray-200 flex justify-center items-center lg:hidden"
+  >
+    <button class="border-2 border-purple-500 p-2">
+      <fa icon="shopping-cart" />
+      Add to Cart
+    </button>
+  </footer>
 </template>
 
 <script lang="ts">
