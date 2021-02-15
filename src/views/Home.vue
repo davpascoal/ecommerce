@@ -14,8 +14,7 @@
 import { Options, Vue } from "vue-class-component";
 import Products from "@/components/Products.vue"; // @ is an alias to /src
 import { mapState } from "vuex";
-import { ProductsActionTypes } from "@/store";
-import { IProducts } from "@/services/product/product.api";
+import { IProductState, ProductsActionTypes } from "@/store/products/products";
 
 @Options({
   components: {
@@ -32,7 +31,7 @@ import { IProducts } from "@/services/product/product.api";
 })
 export default class Home extends Vue {
   getProducts!: Function;
-  products!: IProducts;
+  products!: IProductState;
 
   created() {
     if (!this.products.data.size) {

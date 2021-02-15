@@ -31,10 +31,11 @@
 </template>
 
 <script lang="ts">
-import { IProduct, IProducts } from "@/services/product/product.api";
+import { IProduct } from "@/services/product/product.api";
 import { Options, Vue } from "vue-class-component";
 import { mapState } from "vuex";
 import api from "@/services";
+import { IProductState } from "@/store/products/products";
 
 @Options({
   computed: {
@@ -42,7 +43,7 @@ import api from "@/services";
   },
 })
 export default class Detail extends Vue {
-  products!: IProducts;
+  products!: IProductState;
   isFetching = false;
   product: undefined | IProduct;
 
