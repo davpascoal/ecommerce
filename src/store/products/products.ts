@@ -1,9 +1,9 @@
-import { IRequest } from "@/store/state.api";
+import { IRequest } from "./../state.api";
 import api from "@/services";
 import { IProduct } from "@/services/product/product.api";
 import { Module } from "vuex";
 
-export interface IProductState extends IRequest<Map<string, IProduct>> {}
+export type IProductState = IRequest<Map<string, IProduct>>;
 
 export enum ProductsActionTypes {
   GET_PRODUCTS_ASYNC = "getProductsAsync",
