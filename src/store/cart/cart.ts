@@ -1,23 +1,43 @@
-import { IProduct } from "./../../services/product/product.api";
+/* eslint-disable @typescript-eslint/interface-name-prefix*/
+import { IProduct } from "@/services/product/product.api";
 import { Module } from "vuex";
 import { IState } from "../state.api";
 
-export type ICartState = Map<string, number>;
+interface ICartItem extends IProduct {
+  quantity: number;
+}
+
+export type ICartState = Map<string, ICartItem>;
+
+export enum CartActionTypes {
+  ADD_TO_CART = "addToCart",
+  SUBTRACT_FROM_CART = "subtractFromCart",
+  REMOVE_FROM_CART = "removeFromCart",
+}
 
 const cartModule: Module<ICartState, IState> = {
   state: new Map(),
   mutations: {
-    addToCart(state, payload: Record<string, number>) {
-      const key = Object.keys(payload)[0];
-      const value = state.get(key) || 0;
-      state.set(key, value + 1);
+    addToCart(state, payload: IProduct) {
+      const productId = payload.id.toString();
+      const cartItem = state.get(productId);
+      state.set(productId, {
+        ...payload,
+        quantity: cartItem ? cartItem.quantity + 1 : 1,
+      });
+
+      state = new Map(state);
     },
+    // subtractFromCart()
     removeFromCart(state, id: string) {
       state.delete(id);
     },
-    // deleteFromCart()
   },
-  actions: {},
+  actions: {
+    addToCart({ commit }, product) {
+      commit(CartActionTypes.ADD_TO_CART, product);
+    },
+  },
 };
 
 export default cartModule;

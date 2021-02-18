@@ -15,19 +15,21 @@
       </div>
     </div>
     <p class="mt-4">{{ product.description }}</p>
+    <!-- Quick actions footer for mobile -->
+    <footer
+      class="h-20 fixed bottom-0 bg-detail-footer w-full border-t-2 border-gray-200 flex justify-center items-center lg:hidden"
+    >
+      <button
+        class="border-2 border-purple-500 p-2"
+        @click="() => addToCart(product)"
+      >
+        <fa icon="shopping-cart" />
+        Add to Cart
+      </button>
+    </footer>
   </section>
   <div v-else-if="isFetching">Loading...</div>
   <div v-else>Product not available</div>
-
-  <!-- Quick actions footer for mobile -->
-  <footer
-    class="h-20 fixed bottom-0 bg-detail-footer w-full border-t-2 border-gray-200 flex justify-center items-center lg:hidden"
-  >
-    <button class="border-2 border-purple-500 p-2">
-      <fa icon="shopping-cart" />
-      Add to Cart
-    </button>
-  </footer>
 </template>
 
 <script lang="ts">
@@ -36,10 +38,16 @@ import { Options, Vue } from "vue-class-component";
 import { mapState } from "vuex";
 import api from "@/services";
 import { IProductState } from "@/store/products/products";
+import { CartActionTypes } from "@/store/cart/cart";
 
 @Options({
   computed: {
     ...mapState(["products"]),
+  },
+  methods: {
+    addToCart(product: IProduct) {
+      this.$store.dispatch(CartActionTypes.ADD_TO_CART, product);
+    },
   },
 })
 export default class Detail extends Vue {

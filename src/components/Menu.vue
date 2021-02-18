@@ -46,13 +46,14 @@
     :toggleMenu="toggleCart"
     :direction="'right'"
   >
-    <div>Cart Content</div>
+    <Cart />
   </SlideMenu>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import SlideMenu from "@/components/SlideMenu.vue";
+import Cart from "@/components/Cart.vue";
 
 @Options({
   props: {
@@ -60,6 +61,7 @@ import SlideMenu from "@/components/SlideMenu.vue";
   },
   components: {
     SlideMenu,
+    Cart,
   },
 })
 export default class Menu extends Vue {
